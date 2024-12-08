@@ -1,23 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Hello, world!</title>
+        <title>Receipt Repository</title>
         <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="js/main.js" defer></script>
     </head>
     <body>
         <header>
-            <h1 class="center">Hello, world!</h1>
+            <section class="header-title-line">
+                <h1>Receipt Repository</h1>
+                <button class="menu-button" aria-label="Menu">
+                    <div class="menu-icon"></div>
+                </button>
+            </section>
+            <nav>
+                <ul>
+                    <li><a href="./">Home</a></li>
+                    <li><a href="./add_receipt.html">Add New Receipt</a></li>
+                </ul>
+            </nav>
         </header>
         <main>
-            <p>This page is served by axum.</p>
+            <section>
+                <a class="round nav-button" id="receipt-command-bar-prev">&lt;</a>
+                <span id="receipt-command-bar-last"></span>
+                <span>/</span>
+                <span id="receipt-command-bar-total"></span>
+                <a class="round nav-button" id="receipt-command-bar-next">&gt;</a>
+            </section>
+            <section>
+                <div class="flex-wrapper">
+                    <input type="text" id="receipt-search-input" placeholder="Search..." />
+                    <button id="receipt-search-button" class="primary-button search-button" type="button"><i class="fa fa-search"></i></button>
+                </div>
+            </section>
+            <section id="receipt-table-section" class="main-table">
+            </section>
         </main>
-        <footer>
-            <p class="center">
-                <span><time id="today"></time></span>
-            </p>
-        </footer>
     </body>
 </html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Receipt Repository</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="js/add_receipt.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <section class="header-title-line">
+                <h1>Receipt Repository</h1>
+                <button class="menu-button" aria-label="Menu">
+                    <div class="menu-icon"></div>
+                </button>
+            </section>
+            <nav>
+                <ul>
+                    <li><a href="./">Home</a></li>
+                    <li><a href="./add_receipt.html">Add New Receipt</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+           <form autocomplete="off">
+                <fieldset>
+                    <legend>Receipt</legend>
+                    <div class="grid-wrapper">
+                        <div class="grid-row-one-one">
+                            <label for="receipt-transaction-date">Transaction date: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="datetime-local" id="receipt-transaction-date" step="1" />
+                        </div>
+                        <div class="grid-span-row-two">
+                            <input type="checkbox" id="receipt-taxed" />
+                            <label for="receipt-taxed">Is inventory taxed? </label>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Currency</legend>
+                    <div class="grid-wrapper">
+                        <div class="grid-row-one-one">
+                            <label for="receipt-currency-name">Name: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="hidden" id="receipt-currency-id" />
+                            <input type="text" id="receipt-currency-name" />
+                            <ul name="currency" id="receipt-currency-ul" class="noshow">
+                            </ul>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Store</legend>
+                    <div class="grid-wrapper">
+                        <div class="grid-row-one-one">
+                            <label for="receipt-store-name">Name: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="hidden" id="receipt-store-id" />
+                            <input type="text" id="receipt-store-name" placeholder="Name" />
+                            <ul name="store" id="receipt-store-ul" class="noshow">
+                            </ul>
+                        </div>
+                        <div class="grid-row-one-one">
+                            <label for="receipt-store-alias">Alias: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="text" id="receipt-store-alias" placeholder="Alias" />
+                        </div>
+                        <div class="grid-row-one-one">
+                            <label for="receipt-store-branch">Branch: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="text" id="receipt-store-branch" placeholder="Branch" />
+                        </div>
+                        <div class="grid-row-one-one">
+                            <label for="receipt-store-address">Address: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="text" id="receipt-store-address" placeholder="Address" />
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset id="fieldset-inventory">
+                    <legend>Inventories</legend>
+                    <div class="grid-wrapper">
+                        <div class="grid-row-one-one">
+                            <label for="receipt-product-name-0">Product Name: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="hidden" id="receipt-product-id-0" />
+                            <input type="text" id="receipt-product-name-0" placeholder="Name" />
+                            <ul name="product" id="receipt-product-ul-0" class="noshow">
+                        </div>
+                        <div class="grid-row-one-one">
+                            <label for="receipt-product-alias-0">Product Alias: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="text" id="receipt-product-alias-0" placeholder="Alias" />
+                        </div>
+                        <div class="grid-row-one-one">
+                            <label for="receipt-product-brand-0">Product Brand: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="text" id="receipt-product-brand-0" placeholder="Brand" />
+                        </div>
+                        <div class="grid-row-one-one">
+                            <label for="receipt-product-specification-amount-0">Product Spec. Amount: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="number" id="receipt-product-specification-amount-0" placeholder="Amount" />
+                        </div>
+                        <div class="grid-row-one-one">
+                            <label for="receipt-product-specification-unit-0">Product Spec. Unit: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="text" id="receipt-product-specification-unit-0" placeholder="Unit" />
+                        </div>
+                        <div class="grid-row-one-one">
+                            <label for="receipt-product-specification-others-0">Product Spec. Others: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="text" id="receipt-product-specification-others-0" placeholder="Others" />
+                        </div>
+                        <div class="grid-row-one-one">
+                            <label for="receipt-inventory-price-0">Price: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="number" id="receipt-inventory-price-0" placeholder="Price"/>
+                        </div>
+                        <div class="grid-row-one-one">
+                            <label for="receipt-inventory-quantity-0">Quantity: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="number" id="receipt-inventory-quantity-0" placeholder="Quantity" />
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Actions</legend>
+                    <button id="receipt-add-inventory" type="button" class="secondary-button" title="Add new inventory set at the end"><i class="fa fa-plus"></i></button>
+                    <button id="receipt-remove-inventory" type="button" class="secondary-button" title="Remove the inventory set at the end"><i class="fa fa-minus"></i></button>
+                    <button id="receipt-submit" type="button" class="primary-button" title="Add new receipt">Submit</button>
+                </fieldset>
+           </form> 
+        </main> 
+    </body>
+</html>
