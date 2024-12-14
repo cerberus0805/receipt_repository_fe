@@ -1,10 +1,10 @@
-use receipt_repository_fe::{configuration::AppConfig, router::AppRouter};
+use receipt_repository_fe::{configuration::app_config, router::AppRouter};
 use tower_http::trace::TraceLayer;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 #[tokio::main]
 async fn main() {
-    let app_config = AppConfig::new();
+    let app_config = app_config();
     let (non_blocking_writer, _guard);
 
     if app_config.log_to_file() {

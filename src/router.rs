@@ -9,10 +9,10 @@ pub struct AppRouter {
 }
 
 impl AppRouter {
-    pub fn new(router_path: String, serve_dir_path: String) -> Self {
+    pub fn new(router_path: &str, serve_dir_path: String) -> Self {
         Self {
             router: Router::new().nest_service(
-                router_path.as_str(),
+                router_path,
                 get(|request: Request| async {
                     let service = ServeDir::new(serve_dir_path);
                     let result = service.oneshot(request).await;
