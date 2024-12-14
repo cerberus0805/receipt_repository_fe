@@ -14,7 +14,6 @@ async function loadInventoryData() {
         }
         let res = await fetch(url);
         let payload = await res.json();
-        console.log(payload);
         gPayload = payload;
         gMaxPage = Math.ceil(payload.total / gLimit);
     }

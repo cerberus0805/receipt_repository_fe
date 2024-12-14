@@ -1,53 +1,72 @@
-use std::env;
+use std::{env, sync::OnceLock};
 use dotenvy::dotenv;
+use crate::error::Error;
+
+pub fn app_config() -> &'static AppConfig {
+    static INSTANCE: OnceLock<AppConfig> = OnceLock::new();
+
+    INSTANCE.get_or_init(|| {
+        AppConfig::load_from_env().unwrap_or_else(|ex| {
+            panic!("FATAL ERROR - {ex:?}")
+        })
+    })
+}
 
 pub struct AppConfig {
     host: String,
-    port: u16
+    port: u16,
+    log_filter: String,
+    log_to_file: bool, 
+    log_directory: String,
+    log_prefix: String,
+    router_path: String,
+    serve_dir_path: String
 }
 
 impl AppConfig {
-    pub fn new() -> Self {
+    fn load_from_env() -> Result<AppConfig, Error> {
         dotenv().ok();
-        let host = env::var("BIND_ADDR").unwrap_or("0.0.0.0".to_string()).to_string();
-        let port: u16 = env::var("BIND_PORT").unwrap_or("3001".to_string()).to_string().parse().expect("Convert env port to u16 failed");
-        Self {
-            host,
-            port
-        }
+        Ok(AppConfig {
+            host: get_env("BIND_ADDR")?,
+            port: get_env("BIND_PORT")?.parse().unwrap(),
+            log_filter: get_env("RUST_LOG")?,
+            log_to_file: (|| { get_env("LOG_TO_FILE").unwrap() != "0" })(),
+            log_directory: get_env("LOG_DIRECTORY")?,
+            log_prefix: get_env("LOG_PREFIX")?,
+            router_path: get_env("ROUTER_PATH")?,
+            serve_dir_path: get_env("SERVE_DIR_PATH")?
+        })
     }
 
     pub fn get_address(&self) -> String {
         format!("{}:{}", self.host, self.port)
     }
 
-    pub fn get_log_filter(&self) -> String {
-        let log_filter = env::var("RUST_LOG").unwrap_or("receipt_repository_fe=debug,tower_http=debug,axum::rejection=trace".to_string());
-        log_filter
+    pub fn get_log_filter(&self) -> &str {
+        self.log_filter.as_ref()
     }
 
     pub fn log_to_file(&self) -> bool {
-        let flag_str = env::var("LOG_TO_FILE").unwrap_or("0".to_string());
-        flag_str != "0"
+        self.log_to_file
     }
 
-    pub fn get_log_directory(&self) -> String {
-        let log_directory = env::var("LOG_DIRECTORY").unwrap_or(".".to_string());
-        log_directory
+    pub fn get_log_directory(&self) -> &str {
+        self.log_directory.as_ref()
     }
 
-    pub fn get_log_prefix(&self) -> String {
-        let log_prefix = env::var("LOG_PREFIX").unwrap_or("receipt_repository_fe".to_string());
-        log_prefix
+    pub fn get_log_prefix(&self) -> &str {
+        self.log_prefix.as_ref()
     }
 
-    pub fn get_router_path(&self) -> String {
-        let router_path = env::var("ROUTER_PATH").unwrap_or("/".to_string());
-        router_path
+    pub fn get_router_path(&self) -> &str {
+        self.router_path.as_ref()
     }
 
     pub fn get_serve_dir_path(&self) -> String {
-        let serve_dir_path = env::var("SERVE_DIR_PATH").unwrap_or("dist".to_string());
-        serve_dir_path
+        self.serve_dir_path.to_string()
     }
+}
+
+fn get_env(name: &'static str) -> Result<String, Error> {
+    env::var(name).map_err(|_| Error::ConfigMissingEnv(name))
 }
