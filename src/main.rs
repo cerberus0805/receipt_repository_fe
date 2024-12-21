@@ -1,5 +1,7 @@
+use std::{env, net::SocketAddr, str::FromStr};
+
+use axum_server::tls_rustls::RustlsConfig;
 use receipt_repository_fe::{configuration::app_config, router::AppRouter};
-use tower_http::trace::TraceLayer;
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 
 #[tokio::main]
@@ -27,9 +29,16 @@ async fn main() {
         .init();
 
     let app_router = AppRouter::new(app_config.get_router_path(), app_config.get_serve_dir_path());
-    let listener = tokio::net::TcpListener::bind(app_config.get_address()).await.unwrap();
-    tracing::debug!("listening on {}", listener.local_addr().unwrap());
-    axum::serve(listener, app_router.router.layer(TraceLayer::new_for_http()))
-        .await
-        .unwrap();
+    let cur_path = env::current_dir().unwrap();
+    let tls_config = RustlsConfig::from_pem_file(
+        cur_path.join(app_config.get_tls_pem_folder_name()).join(app_config.get_tls_cert_name()), 
+        cur_path.join(app_config.get_tls_pem_folder_name()).join(app_config.get_tls_key_name())
+    ).await.unwrap();
+
+
+        let addr = SocketAddr::from_str(app_config.get_address().as_str()).unwrap();
+        axum_server::bind_rustls(addr, tls_config)
+            .serve(app_router.router.into_make_service())
+            .await
+            .unwrap();
 }

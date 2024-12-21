@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Receipt Repository</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="js/login.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <section class="header-title-line">
+                <h1>Receipt Repository</h1>
+                <button class="menu-button" aria-label="Menu">
+                    <div class="menu-icon"></div>
+                </button>
+            </section>
+            <nav>
+                <ul>
+                    <li><a href="./">Home</a></li>
+                    <li><a href="./add_receipt.html">Add New Receipt</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <form autocomplete="off">
+                <fieldset>
+                    <legend>Login</legend>
+                    <div class="grid-wrapper">
+                        <div class="grid-row-one-one">
+                            <label for="login-username">Username: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="text" id="login-username" placeholder="Username" />
+                        </div>
+                        <div class="grid-row-one-one">
+                            <label for="login-username">Password: </label>
+                        </div>
+                        <div class="grid-row-one-two">
+                            <input type="password" id="login-pwd" placeholder="Password"/>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <button id="login" type="button" class="primary-button" title="Login">Login</button>
+                </fieldset>
+            </form>
+        </main>
+    </body>
+</html>

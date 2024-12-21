@@ -20,7 +20,10 @@ pub struct AppConfig {
     log_directory: String,
     log_prefix: String,
     router_path: String,
-    serve_dir_path: String
+    serve_dir_path: String,
+    tls_pem_folder_name: String,
+    tls_cert_name: String,
+    tls_key_name: String
 }
 
 impl AppConfig {
@@ -34,7 +37,10 @@ impl AppConfig {
             log_directory: get_env("LOG_DIRECTORY")?,
             log_prefix: get_env("LOG_PREFIX")?,
             router_path: get_env("ROUTER_PATH")?,
-            serve_dir_path: get_env("SERVE_DIR_PATH")?
+            serve_dir_path: get_env("SERVE_DIR_PATH")?,
+            tls_pem_folder_name: get_env("TLS_PEM_FILES_FOLDER")?,
+            tls_cert_name: get_env("TLS_CERT_FILE_NAME")?,
+            tls_key_name: get_env("TLS_KEY_FILE_NAME")?
         })
     }
 
@@ -64,6 +70,18 @@ impl AppConfig {
 
     pub fn get_serve_dir_path(&self) -> String {
         self.serve_dir_path.to_string()
+    }
+
+    pub fn get_tls_pem_folder_name(&self) -> &str {
+        self.tls_pem_folder_name.as_ref()
+    }
+
+    pub fn get_tls_cert_name(&self) -> &str {
+        self.tls_cert_name.as_ref()
+    }
+
+    pub fn get_tls_key_name(&self) -> &str {
+        self.tls_key_name.as_ref()
     }
 }
 

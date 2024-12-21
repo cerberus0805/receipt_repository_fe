@@ -5,6 +5,8 @@ edition = "2021"
 
 [dependencies]
 axum = "0.7.9"
+axum-extra = "0.9.6"
+axum-server = { version = "0.7.1", features = ["tls-rustls"] }
 dotenvy = "0.15.7"
 tokio = { version = "1.42.0", features = ["full"] }
 tower = { version = "0.5.1", features = ["util"] }
