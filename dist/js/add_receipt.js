@@ -1,5 +1,5 @@
 let gInventoryIndex = 0;
-const API_BASE = "http://localhost:3000/api/v1";
+const API_BASE = "https://api.app.localhost:3000/api/v1";
 const FIELD_PER_INVENTORY = 9;
 
 class Receipt {
@@ -203,6 +203,7 @@ async function submit() {
     const postData = await getReceiptData();
     const request = new Request(`${API_BASE}/receipts`, {
         method: "POST", 
+        credentials: 'include',
         body: JSON.stringify(postData), 
         headers: {
             "Content-Type": "application/json"
@@ -228,7 +229,9 @@ async function getAutoComplete(type, keyword) {
     let payload;
     try {
         let url = `${API_BASE}/${type}/autocomplete?keyword=${keyword}`;
-        let res = await fetch(url);
+        let res = await fetch(url, {
+            credentials: "include",
+        });
         payload = await res.json();
     }
     catch (error) {

@@ -8,11 +8,13 @@ let gProductName = null;
 
 async function loadInventoryData() {
     try {
-        let url = `http://localhost:3000/api/v1/customized_inventories?limit=${gLimit}&offset=${gOffset}`;
+        let url = `https://api.app.localhost:3000/api/v1/customized_inventories?limit=${gLimit}&offset=${gOffset}`;
         if (gProductName !== null && gProductName !== "") {
             url += `&product_name=${gProductName}`;
         }
-        let res = await fetch(url);
+        let res = await fetch(url, {
+            credentials: 'include'
+        });
         let payload = await res.json();
         gPayload = payload;
         gMaxPage = Math.ceil(payload.total / gLimit);

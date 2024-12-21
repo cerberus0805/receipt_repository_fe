@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000/api/v1";
+const API_BASE = "https://api.app.localhost:3000/api/v1";
 
 class LoginPayload {
     constructor(username, pwd) {
@@ -18,7 +18,8 @@ async function getLoginData() {
 async function submit() {
     const postData = await getLoginData();
     const request = new Request(`${API_BASE}/login`, {
-        method: "POST", 
+        method: "POST",
+        credentials: 'include',
         body: JSON.stringify(postData), 
         headers: {
             "Content-Type": "application/json"
@@ -29,7 +30,7 @@ async function submit() {
         const response = await fetch(request);
         if (response.ok) {
             alert(`Login success`);
-            console.log(`cookie: ${document.cookie}`);
+            window.location.replace("/");
         }
         else {
             alert(`Login failed`);
